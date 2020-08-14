@@ -1,7 +1,8 @@
 from tkinter import *
-from add_people import *
 import sqlite3
+from add_people import add_people
 from update_people import Update
+from display import Display
 
 con=sqlite3.connect("database.db")
 cur=con.cursor()
@@ -28,7 +29,7 @@ class my_contact():
 
         self.btn_add=Button(self.bottom,text="Add",width=10,font="arial 18",pady=10,command=self.add).place(x=330,y=200)
         self.btn_update = Button(self.bottom, text="Update", width=10, font="arial 18", pady=10,command=self.update).place(x=330, y=300)
-        self.btn_display = Button(self.bottom, text="Display", width=10, font="arial 18", pady=10).place(x=330, y=400)
+        self.btn_display = Button(self.bottom, text="Display", width=10, font="arial 18", pady=10,command=self.display).place(x=330, y=400)
         self.btn_delete = Button(self.bottom, text="Delete", width=10, font="arial 18", pady=10).place(x=330, y=500)
 
     def add(self):
@@ -49,6 +50,19 @@ class my_contact():
             self.master.geometry("500x750")
             self.master.resizable(False, False)
             update_page = Update(self.master,person_id)
+            self.master.mainloop()
+        except:
+            pass
+
+    def display(self):
+        try:
+            person_id = self.list[int(str(self.listbox.curselection())[1:-2])]
+            self.master.destroy()
+            self.master = Tk()
+            self.master.title("Display Contact")
+            self.master.geometry("500x750")
+            self.master.resizable(False, False)
+            display_page = Display(self.master, person_id)
             self.master.mainloop()
         except:
             pass
