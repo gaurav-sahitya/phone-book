@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 import sqlite3
 from add_people import add_people
 from update_people import Update
@@ -25,12 +26,12 @@ class my_contact():
         self.list=[]
         for i in range(len(persons)):
             self.listbox.insert(i,"{}. {} {}".format(i+1,persons[i][1],persons[i][2]))
-            self.list.append(persons[i][0])
+            self.list.append([persons[i][0], persons[i][1]])
 
         self.btn_add=Button(self.bottom,text="Add",width=10,font="arial 18",pady=10,command=self.add).place(x=330,y=200)
         self.btn_update = Button(self.bottom, text="Update", width=10, font="arial 18", pady=10,command=self.update).place(x=330, y=300)
         self.btn_display = Button(self.bottom, text="Display", width=10, font="arial 18", pady=10,command=self.display).place(x=330, y=400)
-        self.btn_delete = Button(self.bottom, text="Delete", width=10, font="arial 18", pady=10).place(x=330, y=500)
+        self.btn_delete = Button(self.bottom, text="Delete", width=10, font="arial 18", pady=10,command=self.delete).place(x=330, y=500)
 
     def add(self):
         self.master.destroy()
@@ -43,7 +44,7 @@ class my_contact():
 
     def update(self):
         try:
-            person_id = self.list[int(str(self.listbox.curselection())[1:-2])]
+            person_id = self.list[int(str(self.listbox.curselection())[1:-2])][0]
             self.master.destroy()
             self.master = Tk()
             self.master.title("Update Contact")
@@ -56,7 +57,7 @@ class my_contact():
 
     def display(self):
         try:
-            person_id = self.list[int(str(self.listbox.curselection())[1:-2])]
+            person_id = self.list[int(str(self.listbox.curselection())[1:-2])][0]
             self.master.destroy()
             self.master = Tk()
             self.master.title("Display Contact")
@@ -66,3 +67,24 @@ class my_contact():
             self.master.mainloop()
         except:
             pass
+
+    def delete(self):
+        try:
+            person_id = self.list[int(str(self.listbox.curselection())[1:-2])][0]
+            person_name = self.list[int(str(self.listbox.curselection())[1:-2])][1]
+            query = "delete from addressbook where person_id = {}".format(person_id)
+            if messagebox.askquestion("Warning", "Are you sure wanna delete " + person_name + " ?") == "yes":
+                try:
+                    cur.execute(query)
+                    con.commit()
+                    messagebox.showinfo("Success", "Deleted")
+                    persons = cur.execute("select * from addressbook").fetchall()
+                    self.list = []
+                    self.listbox.delete("0", "end")
+                    for i in range(len(persons)):
+                        self.listbox.insert(i, "{}. {} {}".format(i + 1, persons[i][1], persons[i][2]))
+                        self.list.append([persons[i][0], persons[i][1]])
+                except Exception as e:
+                    messagebox.showinfo("Info", str(e))
+        except Exception as e:
+            print(e)
