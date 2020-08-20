@@ -41,6 +41,12 @@ class my_contact():
         self.master.resizable(False, False)
         add=add_people(self.master)
         self.master.mainloop()
+        root = Tk()
+        root.title("My Contact")
+        root.geometry("500x750")
+        root.resizable(False, False)
+        a = my_contact(root)
+        root.mainloop()
 
     def update(self):
         try:
@@ -52,6 +58,12 @@ class my_contact():
             self.master.resizable(False, False)
             update_page = Update(self.master,person_id)
             self.master.mainloop()
+            root = Tk()
+            root.title("My Contact")
+            root.geometry("500x750")
+            root.resizable(False, False)
+            a = my_contact(root)
+            root.mainloop()
         except:
             pass
 
@@ -65,6 +77,12 @@ class my_contact():
             self.master.resizable(False, False)
             display_page = Display(self.master, person_id)
             self.master.mainloop()
+            root = Tk()
+            root.title("My Contact")
+            root.geometry("500x750")
+            root.resizable(False, False)
+            a = my_contact(root)
+            root.mainloop()
         except:
             pass
 
