@@ -50,6 +50,7 @@ class add_people():
                 cur.execute(query,(name,surname,email,phone_no,address))
                 con.commit()
                 messagebox.showinfo("Success","Contact Added")
+                self.master.destroy()
             except Exception as e:
                 messagebox.showerror("Error",str(e))
         else:

@@ -62,5 +62,6 @@ class Update():
             cur.execute(query)
             con.commit()
             messagebox.showinfo("Success","Contact Updated")
+            self.master.destroy()
         except Exception as e:
             print(e)
