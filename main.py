@@ -26,6 +26,12 @@ class Application():
         self.master.resizable(False, False)
         a=my_contact(self.master)
         self.master.mainloop()
+        root = Tk()
+        root.title("Phonebook")
+        root.geometry("500x750")
+        app = Application(root)
+        root.resizable(False, False)
+        root.mainloop()
 
     def add(self):
         self.master.destroy()
@@ -35,6 +41,12 @@ class Application():
         self.master.resizable(False, False)
         add=add_people(self.master)
         self.master.mainloop()
+        root = Tk()
+        root.title("Phonebook")
+        root.geometry("500x750")
+        app = Application(root)
+        root.resizable(False, False)
+        root.mainloop()
 
 def main():
     root=Tk()
